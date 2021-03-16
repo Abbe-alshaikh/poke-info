@@ -5,7 +5,9 @@ import { Spinner } from 'react-bootstrap';
 import PokemonData from '../components/PokemonData';
 import Search from '../components/Search';
 import { fetchPokemon } from '../services/fetch';
-import { Button } from 'bootstrap';
+import { useHistory, Redirect } from 'react-router-dom'; 
+import Welcome from "../components/login/welcome";
+import "./homeStyle.css";
 
 const spinnerStyle = {
     width: '10rem',
@@ -21,11 +23,21 @@ const spinnerWarapperStyle= {
 
 const HomePage = ()=>{
 
+    const history = useHistory();
     const [pokemon, setPokemon]= React.useState();
     const [loading, setLoading]= React.useState(false);
     const [error, setError]= React.useState(false);
     const [errorMsg, setErrorMsg]= React.useState('');
+    const [, setIsLoggedIn]= React.useState(true);
 
+    const logOutHandler =()=>{
+            setIsLoggedIn(false)
+            auth().signOut();
+            history.push("/");
+            return <Redirect to="/" component ={Welcome}/>;
+    }
+
+    
     const getPokemon = async (name)=> {
         if (!name) {
             setErrorMsg(' You must enter a pokemon name to search for.');
@@ -50,8 +62,23 @@ const HomePage = ()=>{
     }
 
     return (
+        
         <div> 
-            <button onClick={() => auth().signOut()}>Sign out</button>
+            <header>
+                <div class="container">
+                    <h1 class="logo"></h1>
+
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/about">About</a></li>
+                            <li><a href="favorite">Favorite</a></li>
+                            <li><a  onClick={() => logOutHandler()}>Sign out</a></li>
+                        </ul>
+                    </nav>
+    </div>
+        </header>
+
         <div>
             {error ? (
             <Alert variant ='danger'> {errorMsg} </Alert>
