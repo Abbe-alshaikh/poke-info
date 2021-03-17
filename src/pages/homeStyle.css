@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
 	margin: 0;
 	
 	font-family: 'Work Sans', sans-serif;
 	font-weight: 800;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -69,5 +76,76 @@ nav a::before {
 }
 
 nav a:hover::before {
+  width: 100%;
+}
+
+.catch-btn {
+  width: 200px;
+  height: 35px;
+  display: block;
+  margin: 25px auto;
+  background: #FFCE00;
+  border: none;
+  outline: none;
+  color: #171717;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 7px;
+}
+.sprite {
+  display: block;
+  width: 150px;
+  margin: 0px auto;
+}
+
+ 
+
+.pokedex {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
+}
+.pokedex-list {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 15px;
+}
+.pokedex-list .pokemon {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  min-height: 150px;
+  padding: 15px;
+  background: #F3F3F3;
+} 
+
+
+.pokedex-list .pokemon .remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  outline: none;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  background: rgb(240, 96, 39);
+  color: #F3F3F3;
+  font-size: 28px;
+  cursor: pointer;
+  border-radius: 25px;
+
+}
+.pokedex-list .pokemon .sprite {
   width: 100%;
 }
