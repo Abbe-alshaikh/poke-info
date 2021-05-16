@@ -38,14 +38,16 @@ const HomePage = ()=>{
     
     const onCatching = (pokemon) => {
        
-        try {const pokemonRef = firebase.database().ref("pokemons")
-       const newPokemonRef = pokemonRef.push();
-       newPokemonRef.set({
-           name: pokemon.id,
-           //email: auth.providerId
-       })}catch (error) {
-        alert(error);
-      }
+        try {
+            console.log(pokemon);
+            let currentUser= firebase.auth().currentUser.uid;
+           firebase.database().ref(`pokemons/+${currentUser}`).push().set({
+                selectedpokemon: pokemon
+                //presistance. Gör en modell där man kan spara datan i firebase
+                 })}catch (error) { alert(error);}
+            //++unikt global id för användaren 
+            
+            
     }
    
     const catchPokemon = (pokemon) => {
@@ -54,8 +56,7 @@ const HomePage = ()=>{
           (state.filter(p => pokemon.id === p.id).length > 0);
     
           if (!pokemonExists) {
-              //////////////////////////////
-            ///onCatching(pokemon)
+            onCatching(pokemon)
             state = [...state, pokemon]
             state.sort(function (a, b) {
               return a.id - b.id
@@ -111,7 +112,7 @@ const HomePage = ()=>{
                         <ul>
                             <li><a href="/">Home</a></li>
                             <li><a href="/about">About</a></li>
-                            <li><a href="favorite">Your collection</a></li>
+                            <li><a href="/favorite">Your collection</a></li>
                             <li><a onClick={() => logOutHandler()}>Sign out</a></li>
                         </ul>
                     </nav>
@@ -159,7 +160,7 @@ const HomePage = ()=>{
                             <button className="remove" onClick={() => releasePokemon(pokemon.id)}>X</button>
                             </div>
                         ))}
-                </div>
+                    </div>
                 </section>
         </div>
     );

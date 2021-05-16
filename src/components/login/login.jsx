@@ -13,9 +13,10 @@ export const Login = ({ }) => {
         event.preventDefault();
         const { username, password } = event.target.elements;
         try {
-          await auth()
-            .signInWithEmailAndPassword(username.value, password.value);
-            
+          //await auth()
+            //.signInWithEmailAndPassword(username.value, password.value);
+            console.log(await auth()
+            .signInWithEmailAndPassword(username.value, password.value));
         } catch (error) {
           alert(error);
         }
