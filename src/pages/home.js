@@ -36,13 +36,15 @@ const HomePage = ()=>{
     const [pokeDex, setPokeDex] = useState([]);
    
     
-    const onCatching = (pokemon) => {
+    function onCatching (pokemon) {
        
         try {
-            console.log(pokemon);
+            //console.log(pokemon);
             let currentUser= firebase.auth().currentUser.uid;
-           firebase.database().ref(`pokemons/+${currentUser}`).push().set({
-                selectedpokemon: pokemon
+            console.log(currentUser)
+           firebase.database().ref(`pokemons/+${currentUser}`).set({
+                selectedpokemon: pokemon,
+                pokedex: pokeDex
                 //presistance. Gör en modell där man kan spara datan i firebase
                  })}catch (error) { alert(error);}
             //++unikt global id för användaren 
@@ -51,19 +53,19 @@ const HomePage = ()=>{
     }
    
     const catchPokemon = (pokemon) => {
-        setPokeDex(state => {
-          const pokemonExists = 
-          (state.filter(p => pokemon.id === p.id).length > 0);
-    
+        const pokemonExists = 
+          pokeDex.find(p => pokemon.id === p.id); // To do:Array.prototype.find() -- done
           if (!pokemonExists) {
-            onCatching(pokemon)
-            state = [...state, pokemon]
-            state.sort(function (a, b) {
+            let newState = [...pokeDex, pokemon]
+          
+            newState.sort(function (a, b) {
               return a.id - b.id
             })
+            setPokeDex(newState)
+
+            onCatching(pokemon)
           }
-          return state
-        })
+        
         
       }
     
