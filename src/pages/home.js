@@ -26,7 +26,7 @@ const spinnerWarapperStyle= {
 }
 
 const HomePage = ()=>{
-
+    
     const history = useHistory();
     const [pokemon, setPokemon]= React.useState();
     const [loading, setLoading]= React.useState(false);
@@ -34,17 +34,19 @@ const HomePage = ()=>{
     const [errorMsg, setErrorMsg]= React.useState('');
     const [, setIsLoggedIn]= React.useState(true);
     const [pokeDex, setPokeDex] = useState([]);
+    
    
     
     function onCatching (pokemon) {
        
         try {
+            
             //console.log(pokemon);
             let currentUser= firebase.auth().currentUser.uid;
             console.log(currentUser)
-           firebase.database().ref(`pokemons/+${currentUser}`).set({
-                selectedpokemon: pokemon,
-                pokedex: pokeDex
+           firebase.database().ref(`pokemons/+${currentUser}/`).child.set({
+                selectedpokemon: pokemon.name
+               // pokedex: pokeDex
                 //presistance. Gör en modell där man kan spara datan i firebase
                  })}catch (error) { alert(error);}
             //++unikt global id för användaren 
@@ -61,6 +63,7 @@ const HomePage = ()=>{
             newState.sort(function (a, b) {
               return a.id - b.id
             })
+            
             setPokeDex(newState)
 
             onCatching(pokemon)
@@ -114,7 +117,7 @@ const HomePage = ()=>{
                         <ul>
                             <li><a href="/">Home</a></li>
                             <li><a href="/about">About</a></li>
-                            <li><a href="/favorite">Your collection</a></li>
+                            
                             <li><a onClick={() => logOutHandler()}>Sign out</a></li>
                         </ul>
                     </nav>
